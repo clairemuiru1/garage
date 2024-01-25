@@ -1,4 +1,4 @@
-# garage
+# Garage
 # SuperiorParts Syndicate
 
 Welcome to SuperiorParts Syndicate, your ultimate destination for automotive solutions! Our platform connects clients with top-notch garage services, quality spare parts, and expert mechanics. Whether you're looking for routine maintenance, specialized repairs, or genuine spare parts, SuperiorParts Syndicate has you covered.
@@ -49,6 +49,8 @@ To get started with SuperiorParts Syndicate:
 Copy code
 cd garage
 npm install
+
+
 3. **Run the App:
    ``` bash
 Copy code

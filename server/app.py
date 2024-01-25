@@ -9,8 +9,9 @@ from flask_bcrypt import Bcrypt
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators
 from sqlalchemy.exc import IntegrityError
-from models import db,Garage,Service,SparePart,User
-from wtforms.validators import ValidationError, DataRequired
+from models import db, Garage ,Service , SparePart
+from flask_cors import CORS 
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'

@@ -1,50 +1,61 @@
 #!/usr/bin/env python3
 
 import os
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, request, make_response, jsonify, session
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask import request, session
-from flask_restful import Resource
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, validators
 from sqlalchemy.exc import IntegrityError
 from models import db, Garage ,Service , SparePart
 from flask_cors import CORS 
 
 
 app = Flask(__name__)
-# CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = '1254'
+
+# db = SQLAlchemy(app)
+
 
 migrate = Migrate(app, db)
 
 db.init_app(app)
+bcrypt = Bcrypt(app)
 api = Api(app)
 CORS(app)
 
+class SignupForm(FlaskForm):
+    username = StringField('Username', [validators.DataRequired()])
+    email = StringField('Email', [validators.Email()])
+    password = PasswordField('Password', [validators.DataRequired(), validators.Length(min=6)])
+
 class Signup(Resource):
     def post(self):
-        data = request.get_json()
-        username = data.get('username')
-        email = data.get('email')
-        password = data.get('password')
+        form = SignupForm(request.form)
 
-        if not username or not email or not password:
-            return {'message': 'Username, email, and password are required'}, 400
+        if form.validate():
+            username = form.username.data
+            email = form.email.data
+            password = form.password.data
 
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-        new_user = User(username=username, email=email, _password_hash=hashed_password)
+            new_user = User(username=username, email=email, _password_hash=hashed_password)
 
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            return {'message': 'User created successfully'}, 201
-        except IntegrityError:
-            db.session.rollback()
-            return {'message': 'Username or email already exists. Please choose a different one.'}, 400
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+                return {'message': 'User created successfully'}, 201
+            except IntegrityError:
+                db.session.rollback()
+                return {'message': 'Username or email already exists. Please choose a different one.'}, 400
+        else:
+            return {'error': form.errors}, 400
+
 
 class CheckSession(Resource):
     def get(self):

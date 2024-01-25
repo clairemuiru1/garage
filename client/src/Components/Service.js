@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Service() {
-  const [service, setService] = useState([]);
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/service")
       .then((response) => response.json())
-      .then(setService);
-  }, [setService]); // Add setService to the dependency array
+      .then(setServices);
+  }, []); // No need to include setServices in the dependency array
 
   return (
     <section>
-      <h2>Service</h2>
+      <h2>Services</h2>
       <ul>
-        {service.map((serviceItem) => (
+        {services.map((serviceItem) => (
           <li key={serviceItem.id}>
-            <a href={`${window.location.origin}/service/${serviceItem.id}`}>
-              {serviceItem.name}
-            </a>
+         
+            <p>Name: {serviceItem.name}</p>
+            <p>Description: {serviceItem.description}</p>
+            <p>Price: {serviceItem.price}</p>
           </li>
         ))}
       </ul>
@@ -26,5 +27,6 @@ function Service() {
 }
 
 export default Service;
+
 
 

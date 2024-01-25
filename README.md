@@ -65,10 +65,6 @@ Open http://localhost:3000 in your browser to view SuperiorParts Syndicate.
 
 To run SuperiorParts Syndicate, ensure you have the following dependencies installed:
 
-- **Node.js:** [Download and install Node.js](https://nodejs.org/)
-
-- **npm (Node Package Manager):** Included with Node.js installation.
-
 - **React:** This project is built using React. If you haven't installed it globally, you can do so with:
   ```bash
      npm install -g create-react-app

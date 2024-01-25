@@ -58,35 +58,32 @@ class Signup(Resource):
             return {'error': form.errors}, 400
 
 
+
+class Login(Resource):
+    def post(self):
+        username = request.get_json()['username']
+        user = User.query.filter(User.username == username).first()
+
+        if user:
+            session['user_id'] = user.id
+
+            return user.to_dict(), 200
+        else:
+            return {'message': 'User not found'}, 404
+        
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None
+        return {'message':'204:No Content'}, 204
+    
 class CheckSession(Resource):
     def get(self):
-        if 'user_id' in session:
-            return {'message': 'Session is active'}
+        user = User.query.filter(User.id == session.get('user_id')).first()
+
+        if user:
+            return jsonify(user.to_dict()),200
         else:
-            return {'message': 'Session is not active'}, 401
-
-#login
-class Login(Resource): 
-    def post(self):
-        data = request.get_json()
-        username = data.get('username')
-        password = data.get('password')
-
-        user = User.query.filter_by(username=username).first()
-
-        if user and bcrypt.check_password_hash(user.password_hash, password):
-            session['user_id'] = user.id
-            return {'message': 'Login successful'}, 200
-        else:
-            return {'message': 'Invalid username or password'}, 401
-
-class Logout(Resource):
-    def post(self):
-        if 'user_id' in session:
-            session.pop('user_id')
-            return {'message': 'Logout successful'}, 200
-        else:
-            return {'message': 'No active session to logout from'}, 401
+            return {'message':'401:Not Authorized'},401
 
 class GarageResource(Resource):
     def get(self):
@@ -95,7 +92,14 @@ class GarageResource(Resource):
             garage_dict = {
                 "id": garage.id,
                 "name" : garage.name,
-                "location": garage.location,
+                "location": garage.location,class Logout(Resource):
+    def post(self):
+        if 'user_id' in session:
+            session.pop('user_id')
+            return {'message': 'Logout successful'}, 200
+        else:
+            return {'message': 'No active session to logout from'}, 401
+
                 "contact_number": garage.contact_number,
             }
             garages.append(garage_dict)

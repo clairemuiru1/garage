@@ -1,7 +1,8 @@
-# garage
+# Garage
 # SuperiorParts Syndicate
 
 Welcome to SuperiorParts Syndicate, your ultimate destination for automotive solutions! Our platform connects clients with top-notch garage services, quality spare parts, and expert mechanics. Whether you're looking for routine maintenance, specialized repairs, or genuine spare parts, SuperiorParts Syndicate has you covered.
+
 
 ## Table of Contents
 
@@ -42,25 +43,27 @@ To get started with SuperiorParts Syndicate:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/superiorparts-syndicate.git
+   git clone git@github.com:clairemuiru1/garage.git
 
-## Install Dependencies:
-
-``bash
+2. **Install Dependencies:
+   ``` bash
 Copy code
-cd superiorparts-syndicate
+cd garage
 npm install
-Run the App:
 
-`` bash
+
+3. **Run the App:
+   ``` bash
 Copy code
 npm start
+
 ## Contributors
 Ivy Kibe
 Craig Otieno
 Dennis Kimani
 Claire Muiru
 Guyo Halake
+
 
 Thank you to our fantastic contributors who have helped make SuperiorParts Syndicate a reliable platform for automotive solutions!
 

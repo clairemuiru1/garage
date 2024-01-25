@@ -45,13 +45,13 @@ To get started with SuperiorParts Syndicate:
    ```bash
    git clone git@github.com:clairemuiru1/garage.git
 
-2. **Install Dependencies:
+2. **Install Dependencies:**
    ```bash
     cd garage
     npm install
 
 
-3. **Run the App:
+3. **Run the App:**
    ```bash
      npm start
 

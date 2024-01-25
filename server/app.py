@@ -10,6 +10,8 @@ from flask import request, session
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from models import db, Garage ,Service , SparePart
+from flask_cors import CORS 
+
 
 app = Flask(__name__)
 # CORS(app)

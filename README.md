@@ -46,23 +46,41 @@ To get started with SuperiorParts Syndicate:
    git clone git@github.com:clairemuiru1/garage.git
 
 2. **Install Dependencies:
-   ``` bash
-Copy code
-cd garage
-npm install
+   ```bash
+    cd garage
+    npm install
 
 
 3. **Run the App:
-   ``` bash
-Copy code
-npm start
+   ```bash
+     npm start
+
+
+
+Open http://localhost:3000 in your browser to view SuperiorParts Syndicate.
+
+
+
+## Dependencies
+
+To run SuperiorParts Syndicate, ensure you have the following dependencies installed:
+
+- **Node.js:** [Download and install Node.js](https://nodejs.org/)
+
+- **npm (Node Package Manager):** Included with Node.js installation.
+
+- **React:** This project is built using React. If you haven't installed it globally, you can do so with:
+  ```bash
+     npm install -g create-react-app
+
 
 ## Contributors
-Ivy Kibe
-Craig Otieno
-Dennis Kimani
-Claire Muiru
-Guyo Halake
+* Ivy Kibe
+* Craig Otieno
+* Dennis Kimani
+* Claire Muiru
+* Guyo Halake
+
 
 
 Thank you to our fantastic contributors who have helped make SuperiorParts Syndicate a reliable platform for automotive solutions!

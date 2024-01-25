@@ -51,7 +51,7 @@ class CheckSession(Resource):
             return {'message': 'Session is not active'}, 401
 
 #login
-class Login(Resource):
+class Login(Resource): 
     def post(self):
         data = request.get_json()
         username = data.get('username')

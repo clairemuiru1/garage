@@ -9,7 +9,6 @@ from flask_bcrypt import Bcrypt
 from flask import request, session
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
-
 from models import db, Garage ,Service , SparePart
 
 app = Flask(__name__)
@@ -23,16 +22,55 @@ db.init_app(app)
 api = Api(app)
 
 class Signup(Resource):
-    pass
+    def post(self):
+        data = request.get_json()
+        username = data.get('username')
+        email = data.get('email')
+        password = data.get('password')
+
+        if not username or not email or not password:
+            return {'message': 'Username, email, and password are required'}, 400
+
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+        new_user = User(username=username, email=email, _password_hash=hashed_password)
+
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            return {'message': 'User created successfully'}, 201
+        except IntegrityError:
+            db.session.rollback()
+            return {'message': 'Username or email already exists. Please choose a different one.'}, 400
 
 class CheckSession(Resource):
-    pass
+    def get(self):
+        if 'user_id' in session:
+            return {'message': 'Session is active'}
+        else:
+            return {'message': 'Session is not active'}, 401
 
 class Login(Resource):
-    pass
+    def post(self):
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+
+        user = User.query.filter_by(username=username).first()
+
+        if user and bcrypt.check_password_hash(user.password_hash, password):
+            session['user_id'] = user.id
+            return {'message': 'Login successful'}, 200
+        else:
+            return {'message': 'Invalid username or password'}, 401
 
 class Logout(Resource):
-    pass
+    def post(self):
+        if 'user_id' in session:
+            session.pop('user_id')
+            return {'message': 'Logout successful'}, 200
+        else:
+            return {'message': 'No active session to logout from'}, 401
 
 class GarageResource(Resource):
     def get(self):
@@ -139,6 +177,7 @@ class SparePartResource(Resource):
         )
 
         return response
+
 
 
 api.add_resource(Signup, '/signup', endpoint='signup')

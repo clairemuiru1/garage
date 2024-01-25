@@ -3,6 +3,7 @@
 
 Welcome to SuperiorParts Syndicate, your ultimate destination for automotive solutions! Our platform connects clients with top-notch garage services, quality spare parts, and expert mechanics. Whether you're looking for routine maintenance, specialized repairs, or genuine spare parts, SuperiorParts Syndicate has you covered.
 
+
 ## Table of Contents
 
 - [About SuperiorParts Syndicate](#about-superiorparts-syndicate)

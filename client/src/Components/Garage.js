@@ -34,24 +34,35 @@ function Garage() {
     return <h2>Error: {error.message}</h2>;
   }
 
+
   return (
     <div>
-      <h2>Garage Details</h2>
-      <p>Name: {garage.name}</p>
+      <h1>{garage.name}</h1>
+      <p>Contact Number: {garage.contact_number}</p>
       <p>Location: {garage.location}</p>
 
-      <h3>Services</h3>
-      {garage.Service && garage.Service.length > 0 ? (
-        <ul>
-          {garage.Service.map((service) => (
-            <li key={service.id}>{service.name}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No services available for this garage.</p>
-      )}
+      {garage.services.map((service) => (
+        <div key={service.id}>
+          <h2>{service.name}</h2>
+          <p>Description: {service.description}</p>
+          <p>Price: ${service.price}</p>
+
+          <h3>Spare Parts</h3>
+          <ul>
+            {service.spare_parts.map((part) => (
+              <li key={part.id}>
+                <h4>{part.name}</h4>
+                <p>Description: {part.description}</p>
+                <p>Price: ${part.price}</p>
+                <img src={part.image} alt={part.name} style={{ maxWidth: "200px" }} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 }
 
 export default Garage;
+

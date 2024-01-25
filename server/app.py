@@ -22,6 +22,7 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 api = Api(app)
+CORS(app)
 
 class Signup(Resource):
     def post(self):

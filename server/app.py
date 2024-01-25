@@ -4,25 +4,19 @@ import os
 from flask import Flask, request, make_response, jsonify, session
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-# from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators
 from sqlalchemy.exc import IntegrityError
-from models import db, Garage ,Service , SparePart ,User
+from models import db, Garage, Service, SparePart, User
 from flask_cors import CORS 
-from  flask_restful import reqparse
-
+from flask_restful import reqparse
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '1254'
-
-# db = SQLAlchemy(app)
-
-
-migrate = Migrate(app, db)
 
 db.init_app(app)
 bcrypt = Bcrypt(app)
@@ -57,8 +51,6 @@ class Signup(Resource):
         else:
             return {'error': form.errors}, 400
 
-
-
 class Login(Resource):
     def post(self):
         username = request.get_json()['username']
@@ -66,24 +58,23 @@ class Login(Resource):
 
         if user:
             session['user_id'] = user.id
-
             return user.to_dict(), 200
         else:
             return {'message': 'User not found'}, 404
-        
+
 class Logout(Resource):
     def delete(self):
         session['user_id'] = None
-        return {'message':'204:No Content'}, 204
-    
+        return {'message': 'Logout successful'}, 204
+
 class CheckSession(Resource):
     def get(self):
         user = User.query.filter(User.id == session.get('user_id')).first()
 
         if user:
-            return jsonify(user.to_dict()),200
+            return jsonify(user.to_dict()), 200
         else:
-            return {'message':'401:Not Authorized'},401
+            return {'message': '401: Not Authorized'}, 401
 
 class GarageResource(Resource):
     def get(self):
@@ -92,18 +83,11 @@ class GarageResource(Resource):
             garage_dict = {
                 "id": garage.id,
                 "name" : garage.name,
-                "location": garage.location,class Logout(Resource):
-    def post(self):
-        if 'user_id' in session:
-            session.pop('user_id')
-            return {'message': 'Logout successful'}, 200
-        else:
-            return {'message': 'No active session to logout from'}, 401
-
+                "location": garage.location,
                 "contact_number": garage.contact_number,
             }
             garages.append(garage_dict)
-        
+
         response = make_response(
             jsonify(garages),
             200
@@ -157,7 +141,6 @@ class GarageByID(Resource):
 
         return response
 
-
 class ServiceResource(Resource):
     def get(self):
         services = []
@@ -177,7 +160,6 @@ class ServiceResource(Resource):
         )
 
         return response
-
 
 class SparePartResource(Resource):
     def get(self):
@@ -242,7 +224,8 @@ class SparePartByID(Resource):
             )
 
         return response
-def patch(self, id):
+
+    def patch(self, id):
         spare_part = SparePart.query.get(id)
 
         if spare_part:
@@ -268,7 +251,8 @@ def patch(self, id):
             return {'message': 'Spare part updated successfully'}, 200
         else:
             return {'message': 'Spare part not found'}, 404
-def delete(self, id):
+
+    def delete(self, id):
         spare_part = SparePart.query.get(id)
 
         if spare_part:
@@ -278,9 +262,6 @@ def delete(self, id):
         else:
             return {'message': 'Spare part not found'}, 404
 
-
-
-
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
@@ -289,8 +270,7 @@ api.add_resource(GarageResource, '/garage')
 api.add_resource(GarageByID, '/garage/<int:id>')
 api.add_resource(ServiceResource, '/service')
 api.add_resource(SparePartResource, '/sparepart')
-api.add_resource(SparePartByID ,'/sparepart/<int:id>')
-
+api.add_resource(SparePartByID, '/sparepart/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

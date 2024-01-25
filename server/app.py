@@ -9,7 +9,7 @@ from flask_bcrypt import Bcrypt
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators
 from sqlalchemy.exc import IntegrityError
-from models import db, Garage ,Service , SparePart
+from models import db, Garage ,Service , SparePart ,User
 from flask_cors import CORS 
 
 
@@ -152,6 +152,7 @@ class GarageByID(Resource):
 
         return response
 
+
 class ServiceResource(Resource):
     def get(self):
         services = []
@@ -193,6 +194,61 @@ class SparePartResource(Resource):
 
         return response
 
+class SparePartByID(Resource):
+    def get(self, id=None):
+        if id:
+            # Get a specific spare part by ID
+            spare_part = SparePart.query.get(id)
+
+            if spare_part:
+                spare_part_dict = {
+                    "id": spare_part.id,
+                    "name": spare_part.name,
+                    "description": spare_part.description,
+                    "price": spare_part.price,
+                    "image": spare_part.image,
+                }
+
+                response = make_response(
+                    jsonify(spare_part_dict),
+                    200
+                )
+            else:
+                response = make_response(
+                    jsonify({"error": "Spare part not found"}),
+                    404
+                )
+        else:
+            # Get all spare parts
+            spare_parts = []
+            for spare_part in SparePart.query.all():
+                spare_part_dict = {
+                    "id": spare_part.id,
+                    "name": spare_part.name,
+                    "description": spare_part.description,
+                    "price": spare_part.price,
+                    "image": spare_part.image,
+                }
+                spare_parts.append(spare_part_dict)
+
+            response = make_response(
+                jsonify(spare_parts),
+                200
+            )
+
+        return response
+
+    def delete(self, id):
+        spare_part = SparePart.query.get(id)
+
+        if spare_part:
+            db.session.delete(spare_part)
+            db.session.commit()
+            return {'message': 'Spare part deleted successfully'}, 200
+        else:
+            return {'message': 'Spare part not found'}, 404
+
+
 
 
 api.add_resource(Signup, '/signup', endpoint='signup')
@@ -203,6 +259,7 @@ api.add_resource(GarageResource, '/garage')
 api.add_resource(GarageByID, '/garage/<int:id>')
 api.add_resource(ServiceResource, '/service')
 api.add_resource(SparePartResource, '/sparepart')
+api.add_resource(SparePartByID ,'/sparepart/<int:id>')
 
 
 if __name__ == '__main__':

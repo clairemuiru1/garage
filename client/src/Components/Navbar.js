@@ -13,6 +13,12 @@ const Navbar = () => {
         </li>
         <li>
           <Link to="/sparepart">Spare Parts</Link>
+          <li style={{ marginLeft: 'auto' }}>
+          <Link to="/login">Login</Link>
+        </li>
+        <li>
+          <Link to="/signup">Sign Up</Link>
+        </li>
         </li>
       </ul>
     </nav>

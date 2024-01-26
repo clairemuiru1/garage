@@ -11,7 +11,7 @@ from wtforms import StringField, PasswordField, validators
 from sqlalchemy.exc import IntegrityError
 from models import db, Garage ,Service , SparePart ,User
 from flask_cors import CORS 
-
+from flask_restful import reqparse
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -193,6 +193,34 @@ class SparePartResource(Resource):
         )
 
         return response
+    
+    def patch(self, id):
+        spare_part = SparePart.query.get(id)
+
+        if spare_part:
+            parser = reqparse.RequestParser()
+            parser.add_argument('name', type=str, help='Name of the spare part')
+            parser.add_argument('description', type=str, help='Description of the spare part')
+            parser.add_argument('price', type=float, help='Price of the spare part')
+            parser.add_argument('image', type=str, help='URL or path to the image of the spare part')
+
+            args = parser.parse_args()
+
+            # Update spare part attributes if provided in the patch request
+            if args['name']:
+                spare_part.name = args['name']
+            if args['description']:
+                spare_part.description = args['description']
+            if args['price']:
+                spare_part.price = args['price']
+            if args['image']:
+                spare_part.image = args['image']
+
+            db.session.commit()
+            return {'message': 'Spare part updated successfully'}, 200
+        else:
+            return {'message': 'Spare part not found'}, 404
+
 
 class SparePartByID(Resource):
     def get(self, id=None):
@@ -248,6 +276,8 @@ class SparePartByID(Resource):
         else:
             return {'message': 'Spare part not found'}, 404
 
+    
+
 
 
 
@@ -258,7 +288,7 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(GarageResource, '/garage')
 api.add_resource(GarageByID, '/garage/<int:id>')
 api.add_resource(ServiceResource, '/service')
-api.add_resource(SparePartResource, '/sparepart')
+api.add_resource(SparePartResource, '/sparepart/')
 api.add_resource(SparePartByID ,'/sparepart/<int:id>')
 
 

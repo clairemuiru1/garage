@@ -1,74 +1,54 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-function Signup({ onSignup }) {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Signup = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSignup = async () => {
     try {
-      // Send signup data to the signup endpoint
-      const response = await fetch("http://127.0.0.1:5555/signup", {
-        method: "POST",
+      const response = await fetch('http://127.0.0.1:5555/signup', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, email, password }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to sign up");
+        throw new Error('Signup failed');
       }
 
-      // If signup is successful, trigger the onSignup callback
-      const user = await response.json();
-      onSignup(user);
+      // Handle successful signup, e.g., redirect to login page
+      console.log('Signup successful');
     } catch (error) {
-      console.error("Error signing up:", error);
-      setError(error.message);
+      setError('Error during signup. Please try again.');
     }
   };
 
   return (
     <div>
       <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Signup</button>
-      </form>
-
-      {error && <p>Error: {error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <label>
+        Username:
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+      </label>
+      <br />
+      <label>
+        Email:
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      </label>
+      <br />
+      <label>
+        Password:
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      </label>
+      <br />
+      <button onClick={handleSignup}>Signup</button>
     </div>
   );
-}
+};
 
 export default Signup;

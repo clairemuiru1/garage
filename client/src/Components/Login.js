@@ -1,62 +1,47 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-function Login({ onLogin }) {
-  const [username, setUsername] = useState("");
-  const [userData, setUserData] = useState(null);
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleLogin = async () => {
     try {
-      // Send username to the login endpoint
-      const response = await fetch("http://127.0.0.1:5555/login", {
-        method: "POST",
+      const response = await fetch('http://127.0.0.1:5555/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username }),
+        body: JSON.stringify({ username, password }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to log in");
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('Login successful');
+      } else {
+        setError(data.error || 'Login failed');
       }
-
-      // If login is successful, fetch additional user data
-      const user = await response.json();
-      setUserData(user);
-
-      // Trigger the onLogin callback
-      onLogin(user);
     } catch (error) {
-      console.error("Error logging in:", error);
-      setError(error.message);
+      setError('An error occurred during login');
     }
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <button type="submit">Login</button>
-      </form>
-
-      {userData && (
-        <div>
-          <h2>Welcome, {userData.username}!</h2>
-          <p>Email: {userData.email}</p>
-          {/* Display other user data as needed */}
-        </div>
-      )}
-
-      {error && <p>Error: {error}</p>}
+      <h2>Login</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <label>
+        Username:
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+      </label>
+      <label>
+        Password:
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      </label>
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
-}
+};
 
 export default Login;
-

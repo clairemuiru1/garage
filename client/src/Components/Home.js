@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [garage, setGarage] = useState([]);
@@ -15,7 +16,7 @@ function Home() {
         console.error("Error fetching data:", error);
         setLoading(false);
       });
-  }, [setGarage]);
+  }, []);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -27,9 +28,8 @@ function Home() {
       <ul>
         {garage.map((garageItem) => (
           <li key={garageItem.id}>
-            <a href={`${window.location.origin}/garage/${garageItem.id}`}>
-              {garageItem.name}
-            </a>
+            {/* Use Link from react-router-dom to navigate to garage details */}
+            <Link to={`/garage/${garageItem.id}`}>{garageItem.name}</Link>
           </li>
         ))}
       </ul>

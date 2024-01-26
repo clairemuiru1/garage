@@ -40,16 +40,16 @@ def seed_users(users_data):
 
 if __name__ == '__main__':
     garages_data = [
-        {"name": "AutoCare Garage 1", "location": "123 Main Street", "contact_number": "555-111-1111"},
-        {"name": "CarFix Center 2", "location": "456 Oak Street", "contact_number": "555-222-2222"},
-        {"name": "Quick Tune-Up 3", "location": "789 Pine Street", "contact_number": "555-333-3333"},
-        {"name": "Speedy Repairs 4", "location": "321 Elm Street", "contact_number": "555-444-4444"},
-        {"name": "Precision Auto 5", "location": "654 Birch Street", "contact_number": "555-555-5555"},
-        {"name": "Gearheads Garage 6", "location": "987 Maple Street", "contact_number": "555-666-6666"},
-        {"name": "Driveway Doctors 7", "location": "135 Cedar Street", "contact_number": "555-777-7777"},
-        {"name": "Road Ready Repairs 8", "location": "246 Spruce Street", "contact_number": "555-888-8888"},
-        {"name": "Fast Lane Autos 9", "location": "579 Oakwood Street", "contact_number": "555-999-9999"},
-        {"name": "Motor Masters 10", "location": "864 Pinehurst Street", "contact_number": "555-101-0101"}
+        {"name": "AutoCare Garage", "location": "123 Main Street", "contact_number": "555-111-1111"},
+        {"name": "CarFix Center", "location": "456 Oak Street", "contact_number": "555-222-2222"},
+        {"name": "Quick Tune-Up", "location": "789 Pine Street", "contact_number": "555-333-3333"},
+        {"name": "Speedy Repairs", "location": "321 Elm Street", "contact_number": "555-444-4444"},
+        {"name": "Precision Auto", "location": "654 Birch Street", "contact_number": "555-555-5555"},
+        {"name": "Gearheads Garage", "location": "987 Maple Street", "contact_number": "555-666-6666"},
+        {"name": "Driveway Doctors", "location": "135 Cedar Street", "contact_number": "555-777-7777"},
+        {"name": "Road Ready Repairs", "location": "246 Spruce Street", "contact_number": "555-888-8888"},
+        {"name": "Fast Lane Autos", "location": "579 Oakwood Street", "contact_number": "555-999-9999"},
+        {"name": "Motor Masters", "location": "864 Pinehurst Street", "contact_number": "555-101-0101"}
     ]
 
     services_data = [
@@ -90,18 +90,17 @@ if __name__ == '__main__':
     ]
     
     users_data = [
-    {"username": "Craig", "email": "Craig@gmail.com", "password_hash": "hashed_password1"},
-    {"username": "Claire", "email": "Claire@gmail.com", "password_hash": "hashed_password2"},
-    {"username": "Ivy", "email": "Ivy@gmail.com", "password_hash": "hashed_password3"},
-    {"username": "Dennis", "email": "Dennis@gmail.com", "password_hash": "hashed_password4"},
-    {"username": "Guyo", "email": "Guyo@gmail.com", "password_hash": "hashed_password5"},
-    {"username": "Leroy", "email": "Leroy@gmail.com", "password_hash": "hashed_password6"},
-    {"username": "Anita", "email": "Anita@gmail.com", "password_hash": "hashed_password7"},
-    {"username": "jared", "email": "Jared@gmail.com", "password_hash": "hashed_password8"},
-    {"username": "Davie", "email": "Davie@gmail.com", "password_hash": "hashed_password9"},
-    {"username": "Mitchell", "email": "Mitchell@gmail.com", "password_hash": "hashed_password10"},
-    ]
-
+    {"username": "Craig", "email": "Craig@gmail.com", "password_hash": "hashed_password1", "password": "1234"},
+    {"username": "Claire", "email": "Claire@gmail.com", "password_hash": "hashed_password2", "password": "1234"},
+    {"username": "Ivy", "email": "Ivy@gmail.com", "password_hash": "hashed_password3", "password": "1234"},
+    {"username": "Dennis", "email": "Dennis@gmail.com", "password_hash": "hashed_password4", "password": "1234"},
+    {"username": "Guyo", "email": "Guyo@gmail.com", "password_hash": "hashed_password5", "password": "1234"},
+    {"username": "Leroy", "email": "Leroy@gmail.com", "password_hash": "hashed_password6", "password": "1234"},
+    {"username": "Anita", "email": "Anita@gmail.com", "password_hash": "hashed_password7", "password": "1234"},
+    {"username": "jared", "email": "Jared@gmail.com", "password_hash": "hashed_password8", "password": "1234"},
+    {"username": "Davie", "email": "Davie@gmail.com", "password_hash": "hashed_password9", "password": "1234"},
+    {"username": "Mitchell", "email": "Mitchell@gmail.com", "password_hash": "hashed_password10", "password": "1234"},
+]
 
     with app.app_context():
         seed_garages(garages_data)

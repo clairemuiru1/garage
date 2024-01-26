@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
+  import { Link } from "react-router-dom";
 
-function Header() {
-  return (
-    <header>
-      <h1>
-        <Link to="/">Super Motor garage</Link>
-      </h1>
-    </header>
-  );
-}
+  function Header() {
+    return (
+      <header>
+        <h1>
+          <Link to="/">Super Motor garage</Link>
+        </h1>
+      </header>
+    );
+  }
 
-export default Header;
+  export default Header;

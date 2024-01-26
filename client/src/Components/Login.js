@@ -1,47 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+function Login({ onLogin }) {
+  const [username, setUsername] = useState("");
+  const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
 
-  const handleLogin = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      const response = await fetch('http://127.0.0.1:5555/login', {
-        method: 'POST',
+      // Send username to the login endpoint
+      const response = await fetch("http://127.0.0.1:5555/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username }),
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log('Login successful');
-      } else {
-        setError(data.error || 'Login failed');
+      if (!response.ok) {
+        throw new Error("Failed to log in");
       }
+
+      // If login is successful, fetch additional user data
+      const user = await response.json();
+      setUserData(user);
+
+      // Trigger the onLogin callback
+      onLogin(user);
     } catch (error) {
-      setError('An error occurred during login');
+      console.error("Error logging in:", error);
+      setError(error.message);
     }
   };
 
   return (
     <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <label>
-        Username:
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-      </label>
-      <label>
-        Password:
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-      <button onClick={handleLogin}>Login</button>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <button type="submit">Login</button>
+      </form>
+
+      {userData && (
+        <div>
+          <h2>Welcome, {userData.username}!</h2>
+          <p>Email: {userData.email}</p>
+          {/* Display other user data as needed */}
+        </div>
+      )}
+
+      {error && <p>Error: {error}</p>}
     </div>
   );
 };
 
 export default Login;
+

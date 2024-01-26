@@ -7,6 +7,8 @@ import Home from './Home';
 import Garage from './Garage';
 import Spareparts from './Spareparts';
 import Navbar from './Navbar';
+import Sparepart from './Sparepart';
+import Navbar from './Navbar';
 
 import '../index.css';
 
@@ -20,9 +22,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/garage/:id" element={<Garage />} />
             <Route path="/service" element={<Service />} />
-            <Route path="/spareparts" element={<Spareparts />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/spareparts" element={<Sparepart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Routes>

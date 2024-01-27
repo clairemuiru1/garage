@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Sparepart = () => {
   const [spareParts, setSpareParts] = useState([]);
@@ -19,7 +20,7 @@ const Sparepart = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch('http://localhost:5555/sparepart/${id}', {
+      await fetch(`http://localhost:5555/sparepart/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -46,6 +47,11 @@ const Sparepart = () => {
             <p>Price: ${sparePart.price}</p>
             {sparePart.image && <img src={sparePart.image} alt={sparePart.name} />}
             <button onClick={() => handleDelete(sparePart.id)}>Delete</button>
+            
+            {/* Link to UpdateSparePart component */}
+            <Link to={`/update-spare-part/${sparePart.id}`}>
+             UPDATE  
+            </Link>
           </li>
         ))}
       </ul>

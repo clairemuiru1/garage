@@ -9,7 +9,7 @@ import Home from './Home';
 import Garage from './Garage';
 import Sparepart from './Sparepart';
 import Navbar from './Navbar';
-
+import UpdateSparePart from './UpdateSparepart'; // Corrected import statement
 import '../index.css';
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/update-spare-part/:id" element={<UpdateSparePart />} />
           </Routes>
         </main>
       </div>

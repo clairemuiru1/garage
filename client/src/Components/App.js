@@ -1,5 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// App.js
+
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './Login';
 import Service from './Service';
 import Signup from './Signup';
@@ -11,18 +13,26 @@ import Navbar from './Navbar';
 import '../index.css';
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  const handleLogin = (user) => {
+    console.log("Logged in user:", user);
+    setLoggedInUser(user);
+  };
+
   return (
     <Router>
       <div>
         <Navbar />
         <main>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home loggedInUser={loggedInUser} />} />
             <Route path="/garage/:id" element={<Garage />} />
             <Route path="/service" element={<Service />} />
             <Route path="/sparepart" element={<Sparepart />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>
       </div>

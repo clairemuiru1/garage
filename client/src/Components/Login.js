@@ -1,21 +1,21 @@
-import { useState } from "react";
+// Login.js
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetch(" http://127.0.0.1:5555/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username }),
-    }).then((r) => {
-      if (r.ok) {
-        r.json().then((user) => onLogin(user));
-      }
-    });
+
+    // Replace this logic with your actual login API call
+    const loginData = { username: "sampleUser" };
+
+    onLogin(loginData);
+    navigate("/"); // Redirect to Home after login
   }
 
   return (
@@ -28,6 +28,15 @@ function Login({ onLogin }) {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
+      <br />
+      <label htmlFor="password">Password: </label>
+      <input
+        type="password"
+        id="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <br />
       <button type="submit">Login</button>
     </form>
   );

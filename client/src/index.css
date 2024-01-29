@@ -75,3 +75,17 @@ button[type="submit"] {
   margin: 24px 0 0 0;
   cursor: pointer;
 }
+
+.navbar {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  max-height: 200px; 
+}
